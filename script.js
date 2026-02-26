@@ -1,3 +1,4 @@
+
 const bands = [
   'The Plot in You',
   'The Devil Wears Prada',
@@ -14,20 +15,19 @@ const bands = [
   'An Old Dog'
 ];
 
-// remove leading articles for comparison only
-function normalize(str) {
-  return str.replace(/^(a |an |the )/i, '').toLowerCase();
+// Remove leading articles for sorting
+function stripArticle(name) {
+  return name.replace(/^(a |an |the )/i, '').trim();
 }
 
-// sort ignoring a, an, the
-bands.sort((a, b) => {
-  const A = normalize(a);
-  const B = normalize(b);
-  if (A < B) return -1;
-  if (A > B) return 1;
-  return 0;
-});
+// Sort alphabetically ignoring a, an, the
+bands.sort((a, b) => stripArticle(a).localeCompare(stripArticle(b)));
 
-// render list
+// Render to UL
 const ul = document.getElementById('band');
-ul.innerHTML = bands.map(b => `<li>${b}</li>`).join('');
+
+bands.forEach(band => {
+  const li = document.createElement('li');
+  li.textContent = band;
+  ul.appendChild(li);
+});
